@@ -1,4 +1,5 @@
 
+
 name: Compilar ROTBOX 2
 
 on:
@@ -14,6 +15,10 @@ jobs:
   build:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        working-directory: Rotbox2_v0.2/Rotbox2
+
     steps:
       - name: Descargar proyecto
         uses: actions/checkout@v4
@@ -22,7 +27,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - name: Instalar dependencias
         run: npm install
@@ -34,6 +38,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ROTBOX-2-Windows
-          path: dist/*.exe
+          path: Rotbox2_v0.2/Rotbox2/dist/*.exe
           if-no-files-found: error
           retention-days: 14

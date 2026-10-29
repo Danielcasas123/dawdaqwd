@@ -1,0 +1,39 @@
+
+name: Compilar ROTBOX 2
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Descargar proyecto
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Compilar ROTBOX 2
+        run: npm run dist
+
+      - name: Guardar instalador
+        uses: actions/upload-artifact@v4
+        with:
+          name: ROTBOX-2-Windows
+          path: dist/*.exe
+          if-no-files-found: error
+          retention-days: 14
